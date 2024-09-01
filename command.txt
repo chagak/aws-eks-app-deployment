@@ -1,0 +1,2 @@
+aws ecr get-login-password --region us-east-1 | \
+docker login --username chaganote --password-stdin 871909687521.dkr.ecr.us-east-1.amazonaws.com

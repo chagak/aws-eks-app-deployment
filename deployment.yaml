@@ -1,13 +1,20 @@
 ---
+# you use imperative command
+# kubectl create namespace game2
+
 apiVersion: v1
-kind: Namespace
+kind: Namespace 
 metadata:
-  name: game-2048
+  name: game2
 ---
+# imperative command
+# kubectl create deployment <deployment-name> --image=<image-name> --replicas=<number-of-replicas> --port=<port#> --n=Namespace --labels=app=app-2048
+# kubectl create deployment <deployment-name> --image=871909687521.dkr.ecr.us-east-1.amazonaws.com/jupiter:latest --replicas=1 --port=80 --n=game2 --labels=app=app-2048
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: game-2048
+  namespace: game2
   name: deployment-2048
 spec:
   selector:
@@ -20,21 +27,25 @@ spec:
         app.kubernetes.io/name: app-2048
     spec:
       containers:
-      - image: public.ecr.aws/l6m2t8p7/docker-2048:latest
+      - image: 871909687521.dkr.ecr.us-east-1.amazonaws.com/jupiter:latest
         imagePullPolicy: Always
         name: app-2048
         ports:
         - containerPort: 80
 ---
+# Imperative command kubectl expose service
+# kubectl expose deployment <deployment-name> --type=<service-type> --port=<port> --target-port=<target-port>
+# kubectl expose deployment deployment-2048 --type=NodePort --port=80 --target-port=80 -n=game2 --labels=app=app-2048
+
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: game-2048
+  namespace: game2
   name: service-2048
 spec:
   ports:
     - port: 80
-      targetPort: 80
+      targetPort: 80  # Added for clarity
       protocol: TCP
   type: NodePort
   selector:

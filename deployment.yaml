@@ -50,3 +50,25 @@ spec:
   type: NodePort
   selector:
     app.kubernetes.io/name: app-2048
+
+
+#######################################################
+# #To create NLB use the script below. There is no need to create ingress.
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-2048
+#   namespace: game2
+#   labels:
+#     app: app-2048
+#   annotations:
+#     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+#     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+# spec:
+#   selector:
+#     app: app-2048
+#   ports:
+#     - port: 80
+#       targetPort: 80
+#       protocol: TCP
+#   type: LoadBalancer
